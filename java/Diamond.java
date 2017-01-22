@@ -1,23 +1,30 @@
 class Diamond {
 	public static String print(int n) {
-		if(n % 2 == 0 || n < 0) return null; // invalid input
-		  int i = 1;
-		  // first center
-		  String d = new String(new char[n]).replace("\0", "*") + "\n";
-		  while(true){
-		    n -=2;
-		    d = String.format("%s%s\n%s%s%s\n", 
-		    		// adding upper *s
-		    		new String(new char[i]).replace("\0", " "),
-		    		new String(new char[n]).replace("\0", "*"),
-		    		// center *s
-		    		d,
-		    		// adding lower *s
-		    		new String(new char[i++]).replace("\0", " "),
-		    		new String(new char[n]).replace("\0", "*"));
-		    if(n == 1)	break;
-		  }
-			
-		return d;
+		if (n < 0 || n % 2 == 0)
+			return null;
+
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 1; i <= n; i += 2) {
+			printLine(sb, n, i);
+		}
+
+		for (int i = n - 2; i >= 1; i -= 2) {
+			printLine(sb, n, i);
+		}
+
+		return sb.toString();
+	}
+
+	static void printLine(StringBuilder sb, int n, int i) {
+		repeatChar(sb, ' ', (n - i) / 2);
+		repeatChar(sb, '*', i);
+		sb.append('\n');
+	}
+
+	static void repeatChar(StringBuilder sb, char c, int n) {
+		for (int i = 0; i < n; i++) {
+			sb.append(c);
+		}
 	}
 }
